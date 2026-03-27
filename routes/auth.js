@@ -3,8 +3,8 @@ import { loginPage, postLogin, logout } from "../controllers/authController.js";
 
 const router = Router();
 
-router.use("/login", loginPage);
+router.get("/login", loginPage);
 router.post("/login", postLogin);
-router.use("/logout", logout);
+router.get("/logout", logout);
 
 export default router;

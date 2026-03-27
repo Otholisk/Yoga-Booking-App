@@ -1,4 +1,5 @@
 {"name":"Ashe","email":"Ashe@student.local","password":"$2b$10$3EU43TKMllYiI.fW04j.lOdgG2L/GeH8LxBp0fStPHkQC.dgrrN.W","role":"student","_id":"CyD3wDG4ILuocHt9"}
+{"name":"Ashe","email":"ashe@organiser.local","password":"$2b$10$CIVBY3TZbcHzkZTcv2Y1.Ohh0Bpd4fJLx.o8H.EUZZSSTZFugmwYm","role":"organiser","_id":"be8kJDEZRLztWTmy"}
 {"name":"Bob","email":"bob@organiser.local","password":"$2b$10$PEI2XNV5wXcrFy5EMBNt/e84ZQ.TYq97VI9kbDGfXZtGUWYbifxI.","role":"organiser","_id":"e6HS3ivJ5iGVnHLO"}
 {"name":"Ava","email":"ava@yoga.local","role":"instructor","_id":"jAQmPpJWGDY3gnLq"}
 {"name":"Ben","email":"ben@yoga.local","role":"instructor","_id":"u5gRQkTZNh10OKZU"}

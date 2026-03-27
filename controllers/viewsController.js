@@ -93,10 +93,8 @@ export const postBookCourse = async (req, res, next) => {
     const courseId = req.params.id;
     const booking = await bookCourseForUser(req.user._id, courseId);
     res.redirect(`/bookings/${booking._id}?status=${booking.status}`);
-  } catch (err) {
-    res
-      .status(400)
-      .render("error", { title: "Booking failed", message: err.message });
+  } catch (error) {
+    next(error)
   }
 };
 
@@ -105,12 +103,15 @@ export const postBookSession = async (req, res, next) => {
     const sessionId = req.params.id;
     const booking = await bookSessionForUser(req.user._id, sessionId);
     res.redirect(`/bookings/${booking._id}?status=${booking.status}`);
-  } catch (err) {
+  } catch (error) {
+    next(error);
+    /*
     const message =
       err.code === "DROPIN_NOT_ALLOWED"
         ? "Drop-ins are not allowed for this course."
         : err.message;
     res.status(400).render("error", { title: "Booking failed", message });
+    */
   }
 };
 

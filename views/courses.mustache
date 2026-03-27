@@ -1,20 +1,25 @@
 
-<label>
-    <select name="level">
-      <option value="" {{^filters.level}}selected{{/filters.level}}>Any</option>
-      <option value="beginner" {{#filters}}{{#level}} {{#isBeginner}}selected{{/isBeginner}} {{/level}}{{/filters}}>Beginner</option>
-    </select>
-</label>
+{{> head}}
+{{> header}}
 
-<label>
-      Search
-      <input type="search" name="q" value="{{filters.q}}" placeholder="Title or description" />
+<form method="GET" action="/courses">
+    <label>
+        <select name="level">
+            <option value="" {{^filters.level}}selected{{/filters.level}}>Any</option>
+            <option value="Beginner" {{#filters}}{{#level}} {{#isBeginner}}selected{{/isBeginner}} {{/level}}{{/filters}}>Beginner</option>
+            <option value="Intermediate" {{#filters}}{{#level}} {{#isIntermediate}}selected{{/isIntermediate}} {{/level}}{{/filters}}>Intermediate</option>
+            <option value="Advanced" {{#filters}}{{#level}} {{#isAdvanced}}selected{{/isAdvanced}} {{/level}}{{/filters}}>Advanced</option>
+        </select>
+    </label>
+
+    <label>
+        Search
+        <input type="search" name="q" value="{{filters.q}}" placeholder="Title or description" />
     </label>
 
     <button class="btn" type="submit">Apply</button>
     <a href="/courses">Reset</a>
-<!--  </form>-->
-<!--</section>-->
+</form>
 
 <div class="cards">
   {{#courses}}
@@ -46,3 +51,5 @@
     {{pagination.nextLink}}Next →</a>
   {{/pagination.hasNext}}
 </nav> -->
+
+{{> footer }}

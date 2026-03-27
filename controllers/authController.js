@@ -12,7 +12,7 @@ export const postLogin = async (req, res, next) => {
         if (!user || !(await bcrypt.compare(password, user.password))) {
             return res.render("login", {title: "Login", error: "Invalid email or password"});
         }
-        req.session.userID = user._id;
+        req.session.userId = user._id;
         res.redirect("/");
     } catch (error) {
         next(error);
