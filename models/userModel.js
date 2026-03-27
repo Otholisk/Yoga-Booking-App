@@ -11,6 +11,16 @@ export const UserModel = {
   },
   async findById(id) {
     return usersDb.findOne({ _id: id });
+  },
+  async findAll() {
+    return usersDb.find({});
+  },
+  async update(id, changes) {
+    await usersDb.update({ _id: id }, { $set: changes });
+    return usersDb.findOne({ _id: id });
+  },
+  async delete(id) {
+    return usersDb.remove({_id: id}, {});
   }
 };
 ``

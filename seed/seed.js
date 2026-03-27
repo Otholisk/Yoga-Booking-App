@@ -1,4 +1,5 @@
 // seed/seed.js
+import bcrypt from "bcrypt";
 import {
   initDb,
   usersDb,
@@ -29,16 +30,28 @@ async function wipeAll() {
   ]);
 }
 
-async function ensureDemoStudent() {
-  let student = await UserModel.findByEmail("fiona@student.local");
+async function ensureDemoUsers() {
+  const saltRounds = 10;
+  let student = await UserModel.findByEmail("ashe@student.local");
   if (!student) {
     student = await UserModel.create({
-      name: "Fiona",
-      email: "fiona@student.local",
+      name: "Ashe",
+      email: "Ashe@student.local",
+      password: await bcrypt.hash("student123", saltRounds),
       role: "student",
     });
   }
-  return student;
+
+  let organiser = await UserModel.findByEmail("bob@organiser.local");
+  if (!organiser) {
+    organiser = await UserModel.create({
+      name: "Bob",
+      email: "bob@organiser.local",
+      password: await bcrypt.hash("organiser123", saltRounds),
+      role: "admin",
+    })
+  }
+  return {student, organiser};
 }
 
 async function createWeekendWorkshop() {
@@ -141,8 +154,8 @@ async function run() {
   console.log("Wiping existing data…");
   await wipeAll();
 
-  console.log("Creating demo student…");
-  const student = await ensureDemoStudent();
+  console.log("Creating demo users…");
+  const student = await ensureDemoUsers();
 
   console.log("Creating weekend workshop…");
   const w = await createWeekendWorkshop();

@@ -1,2 +1,6 @@
-{"name":"Fiona","email":"fiona@student.local","role":"student","_id":"cqhGQKxArmgTO1Se"}
+{"name":"Ashe","email":"Ashe@student.local","password":"$2b$10$2xMpzrAwRFsg2lTOzNo2reCU/CnxejqvHGI/NjmOApKMlIW56sXhu","role":"student","_id":"DT2viB1otKczoKYr"}
+{"name":"Ava","email":"ava@yoga.local","role":"instructor","_id":"F4qA3iRAFq6Ai0Bp"}
+{"name":"Bob","email":"bob@organiser.local","password":"$2b$10$he6odNXYwl9aWZkoDj8hOuYEQcq1T1m5YpGy3HSxGCb.KlaHp3m.C","role":"admin","_id":"QPjmO6GPlS6XXwNl"}
+{"name":"Ben","email":"ben@yoga.local","role":"instructor","_id":"sU9UETUmpkRQMVEw"}
 {"$$indexCreated":{"fieldName":"email","unique":true,"sparse":false}}
+{"$$indexCreated":{"fieldName":"email","unique":true}}
