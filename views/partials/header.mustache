@@ -6,7 +6,7 @@
         <a href="/courses">Courses</a>
         {{#user}}
             {{#isOrganiser}}<a href="/organiser">Admin</a>{{/isOrganiser}}
-            <span>{{name}}</span>
+            <span class = "user">{{name}}</span>
             <a href="/logout">Logout</a>
         {{/user}}
         {{^user}}

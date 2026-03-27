@@ -8,8 +8,8 @@ export const loginPage = (req, res) => {
 export const postLogin = async (req, res, next) => {
     try {
         const {email, password} = req.body;
-        const user = await UserModel.findByEmail(email)
-        if (!user || !(bcrypt.compare(password, user.password))) {
+        const user = await UserModel.findByEmail(email);
+        if (!user || !(await bcrypt.compare(password, user.password))) {
             return res.render("login", {title: "Login", error: "Invalid email or password"});
         }
         req.session.userID = user._id;
@@ -19,7 +19,7 @@ export const postLogin = async (req, res, next) => {
     }
 };
 
-export const postLogout = async (req, res, next) => {
+export const logout = (req, res, next) => {
     req.session.destroy((err) => {
         if (err) return next(err);
         res.redirect("/login");

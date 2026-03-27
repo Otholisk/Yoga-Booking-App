@@ -1,0 +1,39 @@
+{{> head}}
+{{> header}}
+
+<main>
+    <h1>Organiser Dashboard</h1>
+    <p>
+        <a href='/organiser/courses/add'>Add New Course</a>
+        <a href='/organiser/users'>Manage Users</a>
+    </p>
+
+    <table class='table'>
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Level</th>
+            <th>Type</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#courses}}
+            <tr>
+                <td>{{title}}</td>
+                <td>{{level}}</td>
+                <td>{{type}}</td>
+                <td>
+                    <a href='/organiser/courses/{{id}}/edit'>Edit</a>
+                    <a href='/organiser/courses/{{id}}/classlist'>Class List</a>
+                    <form action='/organiser/courses/{{id}}/delete' method='post' style='display:inline'>
+                        <button type='submit'>Delete</button>
+                    </form>
+                </td>
+            </tr>
+        {{/courses}}
+        </tbody>
+    </table>
+</main>
+
+{{> footer}}

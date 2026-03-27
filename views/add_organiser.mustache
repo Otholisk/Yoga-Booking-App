@@ -1,0 +1,21 @@
+{{> head}}
+{{> header}}
+
+<main>
+    <h1>Add Organiser</h1>
+    <p class="muted">The new organiser's default password will be <strong>'change'</strong>.</p>
+    <form action="/organiser/users/add-organiser" method="post">
+        <div>
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required />
+        </div>
+        <div>
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required />
+        </div>
+        <button class="btn" type="submit">Add Organiser</button>
+        <a href="/organiser/users">Cancel</a>
+    </form>
+</main>
+
+{{> footer}}

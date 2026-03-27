@@ -1,0 +1,36 @@
+{{> head}}
+{{> header}}
+
+<main>
+    <h1>Manage Users</h1>
+    <p><a href='/organiser/users/add-organiser' class='btn'>Add Organiser</a></p>
+
+    <table class='table'>
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Role</th>
+<!--            <th></th>-->
+        </tr>
+        </thead>
+        <tbody>
+        {{#users}}
+            <tr>
+                <td>{{name}}</td>
+                <td>{{email}}</td>
+                <td>{{role}}</td>
+                <td>
+                    {{^isSelf}}
+                        <form action='/organiser/users/{{_id}}/delete' method='post' style='display:inline'>
+                            <button type='submit'>Delete</button>
+                        </form>
+                    {{/isSelf}}
+                </td>
+            </tr>
+        {{/users}}
+        </tbody>
+    </table>
+</main>
+
+{{> footer}}

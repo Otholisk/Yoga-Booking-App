@@ -11,6 +11,7 @@ import { fileURLToPath } from "url";
 import authRoutes from './routes/auth.js';
 import courseRoutes from "./routes/courses.js";
 import sessionRoutes from "./routes/sessions.js";
+import organiserRoutes from "./routes/organiser.js";
 import bookingRoutes from "./routes/bookings.js";
 import viewRoutes from "./routes/views.js";
 import { attachUser } from "./middlewares/demoUser.js";
@@ -35,7 +36,7 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser());
-app.use(session({ secret: "yoga-secret-key", resave: false, saveUninitialized: false }));
+app.use(session({ secret: "dance-secret-key", resave: false, saveUninitialized: false }));
 
 // Static
 app.use("/static", express.static(path.join(__dirname, "public")));
@@ -47,12 +48,13 @@ app.use(attachUser);
 app.get("/health", (req, res) => res.json({ ok: true }));
 
 // JSON API routes
-app.use('/', authRoutes);
-app.use("/courses", courseRoutes);
-app.use("/sessions", sessionRoutes);
-app.use("/bookings", bookingRoutes);
+app.use("/", authRoutes);
+app.use("/api/courses", courseRoutes);
+app.use("/api/sessions", sessionRoutes);
+app.use("/api/bookings", bookingRoutes);
 
 // SSR view routes
+app.use("/organiser", organiserRoutes);
 app.use("/", viewRoutes);
 
 // Errors

@@ -48,7 +48,7 @@ async function ensureDemoUsers() {
       name: "Bob",
       email: "bob@organiser.local",
       password: await bcrypt.hash("organiser123", saltRounds),
-      role: "admin",
+      role: "organiser",
     })
   }
   return {student, organiser};
@@ -155,7 +155,7 @@ async function run() {
   await wipeAll();
 
   console.log("Creating demo users…");
-  const student = await ensureDemoUsers();
+  const { student } = await ensureDemoUsers();
 
   console.log("Creating weekend workshop…");
   const w = await createWeekendWorkshop();
