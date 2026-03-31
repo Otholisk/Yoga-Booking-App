@@ -23,7 +23,7 @@ export const dashboardPage = async(req, res, next) => {
 
 // Function to render the add course page
 export const addCoursePage = async(req, res) => {
-    res.render('organiser/add_Course', {title: 'Add Course'});
+    res.render('organiser/add_course', {title: 'Add Course'});
 }
 
 // Function to handle adding a new course
@@ -57,7 +57,7 @@ export const editCoursePage = async(req, res, next) => {
         if (!course)
             return res.status(404).render('error', {title: 'Not Found', message: 'Course not found'});
         // Render the edit page with course data
-        res.render('organiser/edit_Course', {
+        res.render('organiser/edit_course', {
             title: 'Edit Course',
             course: {
                 id: course._id,
@@ -186,7 +186,7 @@ export const deleteUser = async(req, res, next) => {
 
 // Function to render the add organiser page
 export const addOrganiserPage = async(req, res) => {
-    res.render('organiser/add_Organiser', {title: 'Add Organiser'});
+    res.render('organiser/add_organiser', {title: 'Add Organiser'});
 };
 
 // Function to handle adding a new organiser
