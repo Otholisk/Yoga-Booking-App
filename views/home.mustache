@@ -3,16 +3,16 @@
 {{> header}}
 <h1>Upcoming Courses</h1>
 
-<div class="cards">
+<div class='cards'>
   {{#courses}}
-  <article class="card">
+  <article class='card'>
     <h2>{{title}}</h2>
-    <p class="muted">
+    <p class='muted'>
       Level: {{level}} • Type: {{type}} {{#allowDropIn}}• Drop-in OK{{/allowDropIn}}
     </p>
     <p>{{description}}</p>
-    <p class="muted">Dates: {{startDate}}  {{endDate}}</p>
-    <p class="muted">Next session: {{nextSession}} • Sessions: {{sessionsCount}}</p>
+    <p class='muted'>Dates: {{startDate}}  {{endDate}}</p>
+    <p class='muted'>Next session: {{nextSession}} • Sessions: {{sessionsCount}}</p>
     <p><a href='/courses/{{id}}'> Book</a></p>
   </article>
   {{/courses}}

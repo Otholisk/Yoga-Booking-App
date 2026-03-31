@@ -2,36 +2,36 @@
 {{> head}}
 {{> header}}
 
-<form method="GET" action="/courses">
+<form method='GET' action='/courses'>
     <label>
-        <select name="level">
-            <option value="" {{^filters.level}}selected{{/filters.level}}>Any</option>
-            <option value="Beginner" {{#filters}}{{#level}} {{#isBeginner}}selected{{/isBeginner}} {{/level}}{{/filters}}>Beginner</option>
-            <option value="Intermediate" {{#filters}}{{#level}} {{#isIntermediate}}selected{{/isIntermediate}} {{/level}}{{/filters}}>Intermediate</option>
-            <option value="Advanced" {{#filters}}{{#level}} {{#isAdvanced}}selected{{/isAdvanced}} {{/level}}{{/filters}}>Advanced</option>
+        <select name='level'>
+            <option value='' {{^filters.level}}selected{{/filters.level}}>Any</option>
+            <option value='Beginner' {{#filters}}{{#level}} {{#isBeginner}}selected{{/isBeginner}} {{/level}}{{/filters}}>Beginner</option>
+            <option value='Intermediate' {{#filters}}{{#level}} {{#isIntermediate}}selected{{/isIntermediate}} {{/level}}{{/filters}}>Intermediate</option>
+            <option value='Advanced' {{#filters}}{{#level}} {{#isAdvanced}}selected{{/isAdvanced}} {{/level}}{{/filters}}>Advanced</option>
         </select>
     </label>
 
     <label>
         Search
-        <input type="search" name="q" value="{{filters.q}}" placeholder="Title or description" />
+        <input type='search' name='q' value='{{filters.q}}' placeholder='Title or description' />
     </label>
 
-    <button class="btn" type="submit">Apply</button>
-    <a href="/courses">Reset</a>
+    <button class='btn' type='submit'>Apply</button>
+    <a href='/courses'>Reset</a>
 </form>
 
-<div class="cards">
+<div class='cards'>
   {{#courses}}
-  <article class="card">
-      <h2><a href="/courses/{{id}}">{{title}}</a></h2>
-    <p class="muted">
+  <article class='card'>
+      <h2><a href='/courses/{{id}}'>{{title}}</a></h2>
+    <p class='muted'>
       Level: {{level}} • Type: {{type}} {{#allowDropIn}}• Drop-in OK{{/allowDropIn}}
     </p>
     <p>{{description}}</p>
-    <p class="muted">Dates: {{startDate}} – {{endDate}}</p>
-    <p class="muted">Next session: {{nextSession}} • Sessions: {{sessionsCount}}</p>
-      <p><a href="/courses/{{id}}" class="btn">View & Book</a></p>
+    <p class='muted'>Dates: {{startDate}} – {{endDate}}</p>
+    <p class='muted'>Next session: {{nextSession}} • Sessions: {{sessionsCount}}</p>
+      <p><a href='/courses/{{id}}' class='btn'>View & Book</a></p>
   </article>
   {{/courses}}
 
@@ -40,12 +40,12 @@
   {{/courses}}
 </div>
 <!-- 
-<nav class="pagination">
+<nav class='pagination'>
   {{#pagination.hasPrev}}
     {{pagination.prevLink}}← Previous</a>
   {{/pagination.hasPrev}}
 
-  <span class="muted">Page {{pagination.page}} of {{pagination.totalPages}}</span>
+  <span class='muted'>Page {{pagination.page}} of {{pagination.totalPages}}</span>
 
   {{#pagination.hasNext}}
     {{pagination.nextLink}}Next →</a>

@@ -1,26 +1,26 @@
 // controllers/viewsController.js
-import { CourseModel } from "../models/courseModel.js";
-import { SessionModel } from "../models/sessionModel.js";
+import { CourseModel } from '../models/courseModel.js';
+import { SessionModel } from '../models/sessionModel.js';
 import {
   bookCourseForUser,
   bookSessionForUser,
-} from "../services/bookingService.js";
-import { BookingModel } from "../models/bookingModel.js";
+} from '../services/bookingService.js';
+import { BookingModel } from '../models/bookingModel.js';
 
 const fmtDate = (iso) =>
-  new Date(iso).toLocaleString("en-GB", {
-    weekday: "short",
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
+  new Date(iso).toLocaleString('en-GB', {
+    weekday: 'short',
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
   });
 const fmtDateOnly = (iso) =>
-  new Date(iso).toLocaleDateString("en-GB", {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
+  new Date(iso).toLocaleDateString('en-GB', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
   });
 
 export const homePage = async (req, res, next) => {
@@ -36,15 +36,15 @@ export const homePage = async (req, res, next) => {
           level: c.level,
           type: c.type,
           allowDropIn: c.allowDropIn,
-          startDate: c.startDate ? fmtDateOnly(c.startDate) : "",
-          endDate: c.endDate ? fmtDateOnly(c.endDate) : "",
-          nextSession: nextSession ? fmtDate(nextSession.startDateTime) : "TBA",
+          startDate: c.startDate ? fmtDateOnly(c.startDate) : '',
+          endDate: c.endDate ? fmtDateOnly(c.endDate) : '',
+          nextSession: nextSession ? fmtDate(nextSession.startDateTime) : 'TBA',
           sessionsCount: sessions.length,
           description: c.description,
         };
       })
     );
-    res.render("home", { title: "Yoga Courses", courses: cards });
+    res.render('home', { title: 'Yoga Courses', courses: cards });
   } catch (err) {
     next(err);
   }
@@ -57,7 +57,7 @@ export const courseDetailPage = async (req, res, next) => {
     if (!course)
       return res
         .status(404)
-        .render("error", { title: "Not found", message: "Course not found" });
+        .render('error', { title: 'Not found', message: 'Course not found' });
 
     const sessions = await SessionModel.listByCourse(courseId);
     const rows = sessions.map((s) => ({
@@ -69,7 +69,7 @@ export const courseDetailPage = async (req, res, next) => {
       remaining: Math.max(0, (s.capacity ?? 0) - (s.bookedCount ?? 0)),
     }));
 
-    res.render("course", {
+    res.render('course', {
       title: course.title,
       course: {
         id: course._id,
@@ -77,8 +77,8 @@ export const courseDetailPage = async (req, res, next) => {
         level: course.level,
         type: course.type,
         allowDropIn: course.allowDropIn,
-        startDate: course.startDate ? fmtDateOnly(course.startDate) : "",
-        endDate: course.endDate ? fmtDateOnly(course.endDate) : "",
+        startDate: course.startDate ? fmtDateOnly(course.startDate) : '',
+        endDate: course.endDate ? fmtDateOnly(course.endDate) : '',
         description: course.description,
       },
       sessions: rows,
@@ -107,10 +107,10 @@ export const postBookSession = async (req, res, next) => {
     next(error);
     /*
     const message =
-      err.code === "DROPIN_NOT_ALLOWED"
-        ? "Drop-ins are not allowed for this course."
+      err.code === 'DROPIN_NOT_ALLOWED'
+        ? 'Drop-ins are not allowed for this course.'
         : err.message;
-    res.status(400).render("error", { title: "Booking failed", message });
+    res.status(400).render('error', { title: 'Booking failed', message });
     */
   }
 };
@@ -122,15 +122,15 @@ export const bookingConfirmationPage = async (req, res, next) => {
     if (!booking)
       return res
         .status(404)
-        .render("error", { title: "Not found", message: "Booking not found" });
+        .render('error', { title: 'Not found', message: 'Booking not found' });
 
-    res.render("booking_confirmation", {
-      title: "Booking confirmation",
+    res.render('booking_confirmation', {
+      title: 'Booking confirmation',
       booking: {
         id: booking._id,
         type: booking.type,
         status: req.query.status || booking.status,
-        createdAt: booking.createdAt ? fmtDate(booking.createdAt) : "",
+        createdAt: booking.createdAt ? fmtDate(booking.createdAt) : '',
       },
     });
   } catch (err) {

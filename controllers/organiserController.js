@@ -1,15 +1,15 @@
 import bcrypt from 'bcrypt';
 
-import { CourseModel } from "../models/courseModel.js";
-import { BookingModel } from "../models/bookingModel.js";
-import { UserModel } from "../models/userModel.js";
+import { CourseModel } from '../models/courseModel.js';
+import { BookingModel } from '../models/bookingModel.js';
+import { UserModel } from '../models/userModel.js';
 
 
 export const dashboardPage = async(req, res, next) => {
     try {
         const courses = await CourseModel.list();
         res.render('organiser/dashboard', {
-            title: "Organiser Dashboard",
+            title: 'Organiser Dashboard',
             courses: courses.map((c) => ({id: c._id, title: c.title, level: c.level, type: c.type})),
         });
     } catch(error) {
@@ -19,7 +19,7 @@ export const dashboardPage = async(req, res, next) => {
 };
 
 export const addCoursePage = async(req, res) => {
-    res.render('organiser/add_Course', {title: "Add Course"});
+    res.render('organiser/add_Course', {title: 'Add Course'});
 }
 
 export const postAddCourse = async(req, res, next) => {
@@ -30,12 +30,12 @@ export const postAddCourse = async(req, res, next) => {
             description,
             level,
             type,
-            allowDropIn: allowDropIn === "on",
+            allowDropIn: allowDropIn === 'on',
             startDate,
             endDate,
             sessionIds: [],
         });
-        res.redirect("/organiser")
+        res.redirect('/organiser')
     } catch(error) {
         next(error);
     }
@@ -45,9 +45,9 @@ export const editCoursePage = async(req, res, next) => {
     try {
         const course = await CourseModel.findById(req.params.id);
         if (!course)
-            return res.status(404).render("error", {title: "Not Found", message: "Course not found"});
+            return res.status(404).render('error', {title: 'Not Found', message: 'Course not found'});
         res.render('organiser/edit_Course', {
-            title: "Edit Course",
+            title: 'Edit Course',
             course: {
                 id: course._id,
                 title: course.title,
@@ -57,11 +57,11 @@ export const editCoursePage = async(req, res, next) => {
                 allowDropIn: course.allowDropIn,
                 startDate: course.startDate,
                 endDate: course.endDate,
-                isLevelBeginner: course.level === "beginner",
-                isLevelIntermediate: course.level === "intermediate",
-                isLevelAdvanced: course.level === "advanced",
-                isTypeWeekly: course.type === "WEEKLY_BLOCK",
-                isTypeWeekend: course.type === "WEEKEND_WORKSHOP",
+                isLevelBeginner: course.level === 'beginner',
+                isLevelIntermediate: course.level === 'intermediate',
+                isLevelAdvanced: course.level === 'advanced',
+                isTypeWeekly: course.type === 'WEEKLY_BLOCK',
+                isTypeWeekend: course.type === 'WEEKEND_WORKSHOP',
                 isAllowDropIn: course.allowDropIn === true,
             }
         });
@@ -78,11 +78,11 @@ export const postEditCourse = async(req, res, next) => {
             description,
             level,
             type,
-            allowDropIn: allowDropIn === "on",
+            allowDropIn: allowDropIn === 'on',
             startDate,
             endDate,
         });
-        res.redirect("/organiser");
+        res.redirect('/organiser');
     } catch (err) {
         next(err);
     }
@@ -90,7 +90,7 @@ export const postEditCourse = async(req, res, next) => {
 export const deleteCourse = async(req, res, next) => {
     try {
         await CourseModel.delete(req.params.id);
-        res.redirect("/organiser");
+        res.redirect('/organiser');
     } catch (err) {
         next(err);
     }
@@ -131,7 +131,7 @@ export const usersPage = async(req, res, next) => {
     try {
         const users = await UserModel.findAll();
         res.render('organiser/users', {
-            title: "Manage Users",
+            title: 'Manage Users',
             users: users.map((u) => ({
                 id: u._id,
                 name: u.name,

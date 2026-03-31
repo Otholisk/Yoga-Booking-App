@@ -4,21 +4,21 @@
 
 <article>
   <h1>{{course.title}}</h1>
-  <p class="muted">
+  <p class='muted'>
     Level: {{course.level}} • Type: {{course.type}} {{#course.allowDropIn}}• Drop-in available{{/course.allowDropIn}}
   </p>
   <p>{{course.description}}</p>
-  <p class="muted">Dates: {{course.startDate}} – {{course.endDate}}</p>
+  <p class='muted'>Dates: {{course.startDate}} – {{course.endDate}}</p>
 
   <section>
-      <form action="/courses/{{course.id}}/book" method="post">
-          <button class="btn primary" type="submit">Book This Course</button>
+      <form action='/courses/{{course.id}}/book' method='post'>
+          <button class='btn primary' type='submit'>Book This Course</button>
       </form>
   </section>
 
   <section>
     <h2>Sessions</h2>
-    <table class="table">
+    <table class='table'>
       <thead>
         <tr>
           <th>Start</th>
@@ -38,8 +38,8 @@
           <td>{{remaining}}</td>
           <td>
 
-            <form action="/sessions/{{id}}/book" method="post">
-                <button class="btn" type="submit" {{#isFull}}disabled{{/isFull}}>Book Session</button>
+            <form action='/sessions/{{id}}/book' method='post'>
+                <button class='btn' type='submit' {{#isFull}}disabled{{/isFull}}>Book Session</button>
             </form>
           </td>
         </tr>

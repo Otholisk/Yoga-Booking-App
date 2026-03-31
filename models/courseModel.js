@@ -1,5 +1,5 @@
 // models/courseModel.js
-import { coursesDb } from "./_db.js";
+import { coursesDb } from './_db.js';
 
 export const CourseModel = {
   async create(course) {

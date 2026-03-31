@@ -1,27 +1,27 @@
 // controllers/coursesListController.js
-import { CourseModel } from "../models/courseModel.js";
-import { SessionModel } from "../models/sessionModel.js";
+import { CourseModel } from '../models/courseModel.js';
+import { SessionModel } from '../models/sessionModel.js';
 
 const fmtDateOnly = (iso) =>
   iso
-    ? new Date(iso).toLocaleDateString("en-GB", {
-        year: "numeric",
-        month: "short",
-        day: "numeric",
+    ? new Date(iso).toLocaleDateString('en-GB', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
       })
-    : "";
+    : '';
 
 const fmtDateTime = (iso) =>
   iso
-    ? new Date(iso).toLocaleString("en-GB", {
-        weekday: "short",
-        year: "numeric",
-        month: "short",
-        day: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
+    ? new Date(iso).toLocaleString('en-GB', {
+        weekday: 'short',
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
       })
-    : "TBA";
+    : 'TBA';
 
 export const coursesListPage = async (req, res, next) => {
   try {
@@ -31,22 +31,22 @@ export const coursesListPage = async (req, res, next) => {
       type, // WEEKLY_BLOCK | WEEKEND_WORKSHOP
       dropin, // yes | no
       q, // text search in title/description (basic contains)
-      page = "1", // 1-based
-      pageSize = "10", // default page size
+      page = '1', // 1-based
+      pageSize = '10', // default page size
     } = req.query;
 
     // Base filter for DB lookup
     const filter = {};
     if (level) filter.level = level;
     if (type) filter.type = type;
-    if (dropin === "yes") filter.allowDropIn = true;
-    if (dropin === "no") filter.allowDropIn = false;
+    if (dropin === 'yes') filter.allowDropIn = true;
+    if (dropin === 'no') filter.allowDropIn = false;
 
     // Fetch all courses matching basic filters
     let courses = await CourseModel.list(filter);
 
     // Client-side search (NeDB has basic querying; for simplicity, do it here)
-    const needle = (q || "").trim().toLowerCase();
+    const needle = (q || '').trim().toLowerCase();
     if (needle) {
       courses = courses.filter(
         (c) =>
@@ -64,7 +64,7 @@ export const coursesListPage = async (req, res, next) => {
         ? new Date(b.startDate).getTime()
         : Number.MAX_SAFE_INTEGER;
       if (ad !== bd) return ad - bd;
-      return (a.title || "").localeCompare(b.title || "");
+      return (a.title || '').localeCompare(b.title || '');
     });
 
     // Pagination
@@ -88,7 +88,7 @@ export const coursesListPage = async (req, res, next) => {
           allowDropIn: c.allowDropIn,
           startDate: fmtDateOnly(c.startDate),
           endDate: fmtDateOnly(c.endDate),
-          nextSession: first ? fmtDateTime(first.startDateTime) : "TBA",
+          nextSession: first ? fmtDateTime(first.startDateTime) : 'TBA',
           sessionsCount: sessions.length,
           description: c.description,
         };
@@ -107,8 +107,8 @@ export const coursesListPage = async (req, res, next) => {
       nextLink: p < totalPages ? buildLink(req, p + 1, ps) : null,
     };
 
-    res.render("courses", {
-      title: "Courses",
+    res.render('courses', {
+      title: 'Courses',
       filters: {
         level,
         type,
@@ -126,10 +126,10 @@ export const coursesListPage = async (req, res, next) => {
 // Helper to preserve current query params while changing page
 function buildLink(req, page, pageSize) {
   const url = new URL(
-    `${req.protocol}://${req.get("host")}${req.originalUrl.split("?")[0]}`
+    `${req.protocol}://${req.get('host')}${req.originalUrl.split('?')[0]}`
   );
   const params = new URLSearchParams(req.query);
-  params.set("page", String(page));
-  params.set("pageSize", String(pageSize));
+  params.set('page', String(page));
+  params.set('pageSize', String(pageSize));
   return `${url.pathname}?${params.toString()}`;
 }

@@ -1,16 +1,16 @@
-<header class="site-header">
-  <div class="wrap">
+<header class='site-header'>
+  <div class='wrap'>
     🧘 Yoga Studio
     <nav>
-        <a href="/">Home</a>
-        <a href="/courses">Courses</a>
+        <a href='/'>Home</a>
+        <a href='/courses'>Courses</a>
         {{#user}}
-            {{#isOrganiser}}<a href="/organiser">Admin</a>{{/isOrganiser}}
-            <span class = "user">{{name}}</span>
-            <a href="/logout">Logout</a>
+            {{#isOrganiser}}<a href='/organiser'>Admin</a>{{/isOrganiser}}
+            <span class = 'user'>{{name}}</span>
+            <a href='/logout'>Logout</a>
         {{/user}}
         {{^user}}
-            <a href="/login">Login</a>
+            <a href='/login'>Login</a>
         {{/user}}
     </nav>
   </div>

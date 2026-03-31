@@ -2,9 +2,9 @@
 import {
   bookCourseForUser,
   bookSessionForUser,
-} from "../services/bookingService.js";
-import { BookingModel } from "../models/bookingModel.js";
-import { SessionModel } from "../models/sessionModel.js";
+} from '../services/bookingService.js';
+import { BookingModel } from '../models/bookingModel.js';
+import { SessionModel } from '../models/sessionModel.js';
 
 export const bookCourse = async (req, res, next) => {
   try {
@@ -31,11 +31,11 @@ export const cancelBooking = async (req, res, next) => {
     const { bookingId } = req.params;
     const booking = await BookingModel.findById(bookingId);
     if (!booking)
-      return res.status(404).json({ error: "Booking not found" });
-    if (booking.status === "CANCELLED")
+      return res.status(404).json({ error: 'Booking not found' });
+    if (booking.status === 'CANCELLED')
       return res.json({ booking });
 
-    if (booking.status === "CONFIRMED") {
+    if (booking.status === 'CONFIRMED') {
       for (const sid of booking.sessionIds) {
         await SessionModel.incrementBookedCount(sid, -1);
       }
