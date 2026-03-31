@@ -1,7 +1,8 @@
-// controllers/coursesListController.js
+// Controller for handling the courses list page with filtering, searching, and pagination
 import { CourseModel } from '../models/courseModel.js';
 import { SessionModel } from '../models/sessionModel.js';
 
+// Helper function to format ISO date string to date only (e.g., "Jan 1, 2023")
 const fmtDateOnly = (iso) =>
   iso
     ? new Date(iso).toLocaleDateString('en-GB', {
@@ -11,6 +12,7 @@ const fmtDateOnly = (iso) =>
       })
     : '';
 
+// Helper function to format ISO date string to date and time (e.g., "Mon, Jan 1, 2023, 10:00")
 const fmtDateTime = (iso) =>
   iso
     ? new Date(iso).toLocaleString('en-GB', {
@@ -23,29 +25,30 @@ const fmtDateTime = (iso) =>
       })
     : 'TBA';
 
+// Main function to handle the courses list page
 export const coursesListPage = async (req, res, next) => {
   try {
-    // Query params for filters/pagination
+    // Extract query parameters for filters and pagination
     const {
-      level, // beginner | intermediate | advanced
-      type, // WEEKLY_BLOCK | WEEKEND_WORKSHOP
-      dropin, // yes | no
-      q, // text search in title/description (basic contains)
-      page = '1', // 1-based
-      pageSize = '10', // default page size
+      level, // Filter by difficulty level
+      type, // Filter by course type
+      dropin, // Filter by drop-in availability
+      q, // Search query for title or description
+      page = '1', // Current page number (1-based)
+      pageSize = '10', // Number of items per page
     } = req.query;
 
-    // Base filter for DB lookup
+    // Initialise filter object for database query
     const filter = {};
     if (level) filter.level = level;
     if (type) filter.type = type;
     if (dropin === 'yes') filter.allowDropIn = true;
     if (dropin === 'no') filter.allowDropIn = false;
 
-    // Fetch all courses matching basic filters
+    // Retrieve courses from database based on filters
     let courses = await CourseModel.list(filter);
 
-    // Client-side search (NeDB has basic querying; for simplicity, do it here)
+    // Perform client-side text search if query provided
     const needle = (q || '').trim().toLowerCase();
     if (needle) {
       courses = courses.filter(
@@ -55,7 +58,7 @@ export const coursesListPage = async (req, res, next) => {
       );
     }
 
-    // Sort by startDate ascending (fallback to title)
+    // Sort courses by start date, then by title
     courses.sort((a, b) => {
       const ad = a.startDate
         ? new Date(a.startDate).getTime()
@@ -67,7 +70,7 @@ export const coursesListPage = async (req, res, next) => {
       return (a.title || '').localeCompare(b.title || '');
     });
 
-    // Pagination
+    // Calculate pagination details
     const p = Math.max(1, parseInt(page, 10) || 1);
     const ps = Math.max(1, parseInt(pageSize, 10) || 10);
     const total = courses.length;
@@ -75,7 +78,7 @@ export const coursesListPage = async (req, res, next) => {
     const start = (p - 1) * ps;
     const pageItems = courses.slice(start, start + ps);
 
-    // Enrich with first session date, session count
+    // Enrich course data with session information
     const cards = await Promise.all(
       pageItems.map(async (c) => {
         const sessions = await SessionModel.listByCourse(c._id);
@@ -95,7 +98,7 @@ export const coursesListPage = async (req, res, next) => {
       })
     );
 
-    // Build pagination view model
+    // Prepare pagination object for the view
     const pagination = {
       page: p,
       pageSize: ps,
@@ -107,6 +110,7 @@ export const coursesListPage = async (req, res, next) => {
       nextLink: p < totalPages ? buildLink(req, p + 1, ps) : null,
     };
 
+    // Render the courses page with data
     res.render('courses', {
       title: 'Courses',
       filters: {
@@ -123,13 +127,17 @@ export const coursesListPage = async (req, res, next) => {
   }
 };
 
-// Helper to preserve current query params while changing page
+// Helper function to build pagination links while preserving query parameters
 function buildLink(req, page, pageSize) {
+  // Construct base URL
   const url = new URL(
     `${req.protocol}://${req.get('host')}${req.originalUrl.split('?')[0]}`
   );
+  // Copy existing query parameters
   const params = new URLSearchParams(req.query);
+  // Update page and pageSize
   params.set('page', String(page));
   params.set('pageSize', String(pageSize));
+  // Return the full URL with updated params
   return `${url.pathname}?${params.toString()}`;
 }

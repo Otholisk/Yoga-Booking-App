@@ -1,11 +1,12 @@
-// routes/courses.js
+// Routes for course-related API endpoints
 import { Router } from 'express';
 import { CourseModel } from '../models/courseModel.js';
 import { SessionModel } from '../models/sessionModel.js';
 
+// Create a new router instance
 const router = Router();
 
-// List courses
+// Route to list all courses
 router.get('/', async (req, res, next) => {
   try {
   const courses = await CourseModel.list();
@@ -15,7 +16,7 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-// Create course
+// Route to create a new course
 router.post('/', async (req, res, next) => {
   try {
     const course = await CourseModel.create(req.body);
@@ -25,7 +26,7 @@ router.post('/', async (req, res, next) => {
   }
 });
 
-// Gets course and sessions for that course
+// Route to get a specific course and its sessions
 router.get('/:id', async (req, res, next) => {
   try {
     const course = await CourseModel.findById(req.params.id);
@@ -38,4 +39,5 @@ router.get('/:id', async (req, res, next) => {
   }
 });
 
+// Export the router
 export default router;

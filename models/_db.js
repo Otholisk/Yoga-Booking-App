@@ -1,15 +1,17 @@
-// models/_db.js
+// Database setup and initialization using NeDB
 import Datastore from 'nedb-promises';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { promises as fs } from 'fs';
-// file names
+
+// Get current file path for relative directory resolution
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Always resolve relative to this file so seeding and server hit the SAME files
+// Directory for database files, relative to this file
 const dbDir = path.join(__dirname, '../db');
 
+// Create database instances for different entities
 export const usersDb = Datastore.create({
   filename: path.join(dbDir, 'users.db'),
   autoload: true,
@@ -27,10 +29,11 @@ export const bookingsDb = Datastore.create({
   autoload: true,
 });
 
-// Call this once at startup (server + seed)
+// Function to initialize the database, called at startup
 export async function initDb() {
+  // Ensure the database directory exists
   await fs.mkdir(dbDir, { recursive: true });
-  // Ensure helpful indexes are ready before we insert
+  // Create indexes for efficient queries
   await usersDb.ensureIndex({ fieldName: 'email', unique: true });
   await sessionsDb.ensureIndex({ fieldName: 'courseId' });
 }
